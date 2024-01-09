@@ -11,7 +11,7 @@ const NotFound = () => {
           Sorry, the page you are looking for does not exist.
         </p>
         <img
-          className="w-64 animate-bounce"
+          className="w-36 animate-bounce"
           src={NotfoundImage}
           alt="404 Illustration"
         />
