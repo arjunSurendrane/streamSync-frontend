@@ -1,3 +1,7 @@
+const root = "/stream";
+
 export const PATH = {
-  home: "/home",
+  home: root + "",
+  history: root + "/history",
+  streamingPage: root + "/online",
 };

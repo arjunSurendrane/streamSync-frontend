@@ -8,9 +8,13 @@ function AuthLayout() {
   return (
     <div>
       <Header />
-      <div className="flex">
-        <Sidebar />
-        <Outlet />
+      <div className="grid grid-flow-col">
+        <div className="col-span-1">
+          <Sidebar />
+        </div>
+        <div className="col-span-8">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
