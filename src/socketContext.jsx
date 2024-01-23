@@ -8,25 +8,7 @@ export const SocketContext = createContext();
 const socket = io("http://localhost:5000");
 
 const SocketProvider = ({ children }) => {
-  const [stream, setStream] = useState();
-
-  const myVideo = useRef();
-
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
-
-        myVideo.current.srcObject = currentStream;
-      });
-  }, []);
-
-  return (
-    <SocketContext.Provider value={{ stream, myVideo }}>
-      {children}
-    </SocketContext.Provider>
-  );
+  return <SocketContext.Provider>{children}</SocketContext.Provider>;
 };
 
 export default SocketProvider;

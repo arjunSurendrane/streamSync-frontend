@@ -1,8 +1,20 @@
-import { useContext } from "react";
-import { SocketContext } from "../socketContext";
+import { useContext, useEffect, useRef, useState } from "react";
+// import { SocketContext } from "../socketContext";
 
 export default function VideoScreen() {
-  const { myVideo, stream } = useContext(SocketContext);
+  const [stream, setStream] = useState();
+
+  const myVideo = useRef();
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((currentStream) => {
+        setStream(currentStream);
+
+        myVideo.current.srcObject = currentStream;
+      });
+  }, []);
 
   return (
     <div>
