@@ -1,20 +1,48 @@
-import { useContext, useEffect, useRef, useState } from "react";
-// import { SocketContext } from "../socketContext";
+import { useEffect, useRef, useState } from "react";
+import SimplePeer from "simple-peer/simplepeer.min.js";
+import { io } from "socket.io-client";
 
 export default function VideoScreen() {
   const [stream, setStream] = useState();
+  const [me, setMe] = useState();
 
   const myVideo = useRef();
-
+  // this is the sample command for practice the pull request in command line
   useEffect(() => {
+    const socket = io("http://localhost:3000");
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         setStream(currentStream);
 
         myVideo.current.srcObject = currentStream;
+
+        const peer = new SimplePeer({
+          initiator: false,
+          trickle: false,
+          stream,
+        });
+
+        socket.emit("stream", JSON.stringify(currentStream));
+      })
+      .catch((error) => {
+        console.error("Error accessing webcam:", error);
       });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+  // const startStream = () => {
+  //   const peer = new Peer({ initiator: false, trickle: false, stream });
+  //   peer.on("signal", (data) => {
+  //     console.log(data);
+  //     socket.emit("startStream", { stream: data });
+  //   });
+  //   peer.signal();
+  // };
 
   return (
     <div>
